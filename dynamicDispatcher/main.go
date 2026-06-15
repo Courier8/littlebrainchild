@@ -125,3 +125,37 @@ func siftDownReorderPool() {
 		}
 	}
 }
+
+func siftUpFromIndex(idx int) {
+
+	for idx > 0 {
+		parentIdx := (idx - 1) / 2
+
+		// sift up if still smaller
+		if riderPool[idx].Score < riderPool[parentIdx].Score {
+			riderPool[idx], riderPool[parentIdx] = riderPool[parentIdx], riderPool[idx]
+			idx = parentIdx
+		} else {
+			break
+		}
+	}
+}
+
+func siftDownFromIndex(idx int) {
+
+	for leftChildIdx := idx*2 + 1; leftChildIdx < len(riderPool); leftChildIdx = idx*2 + 1 {
+		rightChildIdx := leftChildIdx + 1
+
+		smallerIdx := leftChildIdx
+		if rightChildIdx < len(riderPool) && riderPool[smallerIdx].Score > riderPool[rightChildIdx].Score {
+			smallerIdx = rightChildIdx
+		}
+
+		if riderPool[idx].Score > riderPool[smallerIdx].Score {
+			riderPool[idx], riderPool[smallerIdx] = riderPool[smallerIdx], riderPool[idx]
+			idx = smallerIdx
+		} else {
+			break
+		}
+	}
+}
